@@ -41,12 +41,31 @@ public class TwoStack {
     Stack<Double> vals = new Stack<Double>();
     public double evaluate(String s){
         String[] tokens = s.split(" ");
-       
-        //Loop over the tokens until you reach the end of the expression
-        //TODO
+        for (String str: tokens) {
+            if (str.equals("(")) {
+                continue;
+            } else if (str.equals("+") || str.equals("-") || str.equals("*") || str.equals("/")) {
+                ops.push(str);
+            } else if (str.equals(")")) {
+                String operator = ops.pop();
+                Double val2 = vals.pop();
+                Double val1 = vals.pop();
+                Double sum = 0.0;
+                if (operator.equals("+")) {
+                    sum = val1 + val2;
+                } else if (operator.equals("-")) {
+                    sum = val1 - val2;
+                } else if (operator.equals("*")) {
+                    sum = val1 * val2;
+                } else {
+                    sum = val1 / val2;
+                }
+                vals.push(sum);
 
-        
-
+            } else if (Integer.parseInt(str) >= 0 || Integer.parseInt(str) <= 9) {
+                vals.push((double)Integer.parseInt(str));
+            }
+        }
 
         return vals.pop();
     }
